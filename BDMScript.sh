@@ -141,6 +141,11 @@ do
                     grep -E "broadcast chans" $Temp_Dir_Path/Temp_Process_File2.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
+                        # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                        if [ "$QAMDuplicate" == "1" ]; then
+                            continue;
+                        fi;
+                        
                         echo "Broadcast channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename" >> $Temp_Dir_Path/logfile.txt
                         echo "Broadcast channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"   >> $Temp_Dir_Path/mailcontent.txt
                         Broad_DS=NULL
@@ -150,12 +155,25 @@ do
                         continue;
                     else
                         Broad_DS=$(grep -E "broadcast chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$Broad_DS" ]; then
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
+                        
                     fi
                     
                     ##  Collect docsis channels ##
                     grep -E "docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
+                        # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                        if [ "$QAMDuplicate" == "1" ]; then
+                            continue;
+                        fi;
+                        
                         echo "docsis channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename" >> $Temp_Dir_Path/logfile.txt
                         echo "docsis channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"    >> $Temp_Dir_Path/mailcontent.txt
                         DOCSIS_DS=NULL
@@ -165,12 +183,24 @@ do
                         continue;
                     else
                         DOCSIS_DS=$(grep -E "docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$DOCSIS_DS" ]; then
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect RF channels ##
                     grep -E "RF chans"  $Temp_Dir_Path/Temp_Process_File2.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
+                        # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                        if [ "$QAMDuplicate" == "1" ]; then
+                            continue;
+                        fi;
+                        
                         echo "RF channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename" >> $Temp_Dir_Path/logfile.txt
                         echo "RF channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"   >> $Temp_Dir_Path/mailcontent.txt
                         RF_DS=NULL
@@ -180,12 +210,24 @@ do
                         continue;
                     else
                         RF_DS=$(grep -E "RF chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$RF_DS" ]; then
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect video channels ##
                     grep -E "video chans" $Temp_Dir_Path/Temp_Process_File2.txt  > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
+                        # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                        if [ "$QAMDuplicate" == "1" ]; then
+                            continue;
+                        fi;
+                        
                         echo "video channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"  >> $Temp_Dir_Path/logfile.txt
                         echo "video channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"    >> $Temp_Dir_Path/mailcontent.txt
                         VIDEO_DS=NULL
@@ -195,6 +237,13 @@ do
                         continue;
                     else
                         VIDEO_DS=$(grep -E "video chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$VIDEO_DS" ]; then
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     # Check if the data collected is longer than 5 lines, which means that we have upstream channels
                     if [ "$(wc -l < $Temp_Dir_Path/Temp_Process_File2.txt)" -gt 5 ]
@@ -203,6 +252,11 @@ do
                         grep -E "OFDM chans" $Temp_Dir_Path/Temp_Process_File2.txt > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
+                            # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            
                             echo "OFDM channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename" >> $Temp_Dir_Path/logfile.txt
                             echo "OFDM channels not found for QAM_Serial No: $QAM_Serial_Num in $Filename"   >> $Temp_Dir_Path/mailcontent.txt
                             OFDM_DS=NULL
@@ -212,12 +266,24 @@ do
                             continue;
                         else
                             OFDM_DS=$(grep -E "OFDM chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                            if [ -z "$OFDM_DS" ]; then
+                                if [ "$QAMDuplicate" == "1" ]; then
+                                    continue;
+                                fi;
+                                ((Skipped_Serials++));
+                                continue;
+                            fi;
                         fi
                         
                         ##  Collect OFDM chan width  ##
                         grep -E "OFDM chan width" $Temp_Dir_Path/Temp_Process_File2.txt  > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
+                            # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
+                            if [ "$QAMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            
                             echo "OFDM channel width not found for QAM_Serial No: $QAM_Serial_Num in $Filename"  >> $Temp_Dir_Path/logfile.txt
                             echo "OFDM channel width not found for QAM_Serial No: $QAM_Serial_Num in $Filename"   >> $Temp_Dir_Path/mailcontent.txt
                             OFDM_US_WIDTH=NULL
@@ -227,6 +293,13 @@ do
                             continue;
                         else
                             OFDM_US_WIDTH=$(grep -E "OFDM chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                            if [ -z "$OFDM_US_WIDTH" ]; then
+                                if [ "$QAMDuplicate" == "1" ]; then
+                                    continue;
+                                fi;
+                                ((Skipped_Serials++));
+                                continue;
+                            fi;
                         fi;
                     else
                         OFDM_DS=NULL;
@@ -234,6 +307,8 @@ do
                     fi;
                     DOCSIS_US=NULL ; OFDMA_US=NULL ; OFDMA_US_WIDTH=NULL ;
                     
+                    # Set serials as a working duplicate serial
+                    QAMWorkingDup=1;
                     
                     ################################################################################################################
                     ##                              To collect the QAM data in to logfile                                         ##
@@ -257,6 +332,7 @@ do
                 
                 for QAM_Serial_Num in $(cat $Temp_Dir_Path/QAM_Serial_Num.txt)
                 do
+                    QAMDuplicate=0;
                     Duplicate_Serial_check=$(grep -c "Serial Number = $QAM_Serial_Num" "$Dir_Path_Input/$Filename" )
                     if [ "$Duplicate_Serial_check" -ge 2 ]
                     then
@@ -265,18 +341,46 @@ do
                         cat /dev/null > $Temp_Dir_Path/duplicate.txt
                         grep -n "$QAM_Serial_Num" "$Temp_Dir_Path""/Clean""$Filename" > $Temp_Dir_Path/duplicate.txt
                         echo "Duplicate QAM serial Number : $QAM_Serial_Num  exists in $Filename checking for last occurrence" >> $Temp_Dir_Path/logfile.txt
-                        Line=$(tail -1 $Temp_Dir_Path/duplicate.txt | awk ' { print $1 } ' | cut -d':' -f1)
-                        ((Line_End=Line+6))
-                        sed -n "$Line,$Line_End p" "$Temp_Dir_Path""/Clean""$Filename" > $Temp_Dir_Path/Temp_Process_File2.txt
-                        # Test and see if within the next 6 lines another serial was captured, if so only capture before the second serial number.
-                        if [ "$(grep -c "Serial Number" "$Temp_Dir_Path/Temp_Process_File2.txt")" -gt "1" ] ;
-                        then
-                            Line_End=$(grep -n "Serial Number" "$Temp_Dir_Path/Temp_Process_File2.txt" | tail -1 | awk ' { print $1 } ' | cut -d':' -f1 )
-                            ((Line_End--))
-                            sed -n "1,$Line_End p" "$Temp_Dir_Path/Temp_Process_File2.txt" > "$Temp_Dir_Path/Temp_Process_File2.txttmp"
-                            mv "$Temp_Dir_Path/Temp_Process_File2.txttmp" "$Temp_Dir_Path/Temp_Process_File2.txt"
+                        
+                        # Create variable to show that there is a duplicate QAM serial
+                        QAMDuplicate=1;
+                        # Create variable to show whether there is a working duplicate serial
+                        QAMWorkingDup=0;
+                        
+                        # Loop through all the duplicate serials to find a working one
+                        for k in $(awk ' { print $1 } ' $Temp_Dir_Path/duplicate.txt | cut -d':' -f1| sort -rn); do
+                            # Set line equal to the current serial
+                            Line=$k;
+                            # Set end of line 6 lines later
+                            ((Line_End=Line+6))
+                            sed -n "$Line,$Line_End p" "$Temp_Dir_Path""/Clean""$Filename" > $Temp_Dir_Path/Temp_Process_File2.txt
+                            
+                            # Test and see if within the next 6 lines another serial was captured, if so only capture before the second serial number.
+                            if [ "$(grep -c "Serial Number" "$Temp_Dir_Path/Temp_Process_File2.txt")" -gt "1" ] ;
+                            then
+                                Line_End=$(grep -n "Serial Number" "$Temp_Dir_Path/Temp_Process_File2.txt" | tail -1 | awk ' { print $1 } ' | cut -d':' -f1 )
+                                ((Line_End--))
+                                sed -n "1,$Line_End p" "$Temp_Dir_Path/Temp_Process_File2.txt" > "$Temp_Dir_Path/Temp_Process_File2.txttmp"
+                                mv "$Temp_Dir_Path/Temp_Process_File2.txttmp" "$Temp_Dir_Path/Temp_Process_File2.txt"
+                            fi;
+                            
+                            # Collect data if a working duplicate has not been found
+                            if [ "$QAMWorkingDup" == 0 ]; then
+                                Collect_QAM ## Calling QAM data collection function
+                            fi;
+                            
+                        done;
+                        
+                        # If none of the duplicates have correct data, skip serial and write to log
+                        if [ "$QAMWorkingDup" == 0 ]; then
+                            echo "No complete set of data found for: $QAM_Serial_Num in $Filename"  >> $Temp_Dir_Path/logfile.txt
+                            echo "No complete set of data found for: $QAM_Serial_Num in $Filename"   >> $Temp_Dir_Path/mailcontent.txt
+                            echo "QAM serial number $QAM_Serial_Num from file $Filename skipped!" >> $Temp_Dir_Path/logfile.txt
+                            echo "QAM serial number $QAM_Serial_Num from file $Filename skipped!" >> $Temp_Dir_Path/mailcontent.txt
+                            ((Skipped_Serials++));
+                            continue;
                         fi;
-                        Collect_QAM ## Calling QAM data collection function
+                        
                     else
                         grep -En "$QAM_Serial_Num" "$Dir_Path_Input/$Filename" | grep -v "Part_No" > /dev/null 2>&1
                         if [ $? != 0 ]
@@ -359,6 +463,13 @@ do
                         continue;
                     else
                         DOCSIS_US=$(grep -E "docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$DOCSIS_US" ]; then
+                            if [ "$UPSDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     # Check if the data collected is longer than 2 lines, which means that we have upstream channels
                     if [ "$(wc -l < $Temp_Dir_Path/Temp_Process_File2.txt)" -gt 2 ]
@@ -381,6 +492,13 @@ do
                             continue;
                         else
                             OFDMA_US=$(grep -E "OFDMA chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                            if [ -z "$OFDMA_US" ]; then
+                                if [ "$UPSDuplicate" == "1" ]; then
+                                    continue;
+                                fi;
+                                ((Skipped_Serials++));
+                                continue;
+                            fi;
                         fi
                         
                         ## Collect OFDMA channel Width  ##
@@ -401,6 +519,13 @@ do
                             continue;
                         else
                             OFDMA_US_WIDTH=$(grep -E "OFDMA chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                            if [ -z "$OFDMA_US_WIDTH" ]; then
+                                if [ "$UPSDuplicate" == "1" ]; then
+                                    continue;
+                                fi;
+                                ((Skipped_Serials++));
+                                continue;
+                            fi;
                         fi;
                     else
                         OFDMA_US=NULL;
@@ -408,6 +533,7 @@ do
                     fi;
                     Broad_DS=NULL ; DOCSIS_DS=NULL; RF_DS=NULL;  OFDM_DS=NULL ; VIDEO_DS=NULL ; OFDM_US_WIDTH=NULL ;
                     
+                    # Set serials as a working duplicate serial
                     UPSWorkingDup=1;
                     
                     ################################################################################################################
@@ -572,6 +698,13 @@ do
                         continue;
                     else
                         Broad_DS=$(grep -E "broadcast chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$Broad_DS" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect DS docsis channels ##
@@ -592,6 +725,13 @@ do
                         continue;
                     else
                         DOCSIS_DS=$(grep -E "ds docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$DOCSIS_DS" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect OFDM chan width  ##
@@ -612,6 +752,13 @@ do
                         continue;
                     else
                         OFDM_US_WIDTH=$(grep -E "OFDM chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$OFDM_US_WIDTH" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect video channels ##
@@ -632,6 +779,13 @@ do
                         continue;
                     else
                         VIDEO_DS=$(grep -E "video chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$VIDEO_DS" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     
@@ -653,6 +807,13 @@ do
                         continue;
                     else
                         DOCSIS_US=$(grep -E "us docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$DOCSIS_US" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ## Collect OFDMA channel Width  ##
@@ -673,6 +834,13 @@ do
                         continue;
                     else
                         OFDMA_US_WIDTH=$(grep -E "OFDMA chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ' )
+                        if [ -z "$OFDMA_US_WIDTH" ]; then
+                            if [ "$CSCDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     RF_DS=NULL ; OFDM_DS=NULL ; OFDMA_US=NULL ;
@@ -832,6 +1000,13 @@ do
                         continue;
                     else
                         Broad_DS=$(grep -E "broadcast chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$Broad_DS" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect ds docsis channels ##
@@ -852,6 +1027,13 @@ do
                         continue;
                     else
                         DOCSIS_DS=$(grep -E "ds docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$DOCSIS_DS" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect video channels ##
@@ -872,6 +1054,13 @@ do
                         continue;
                     else
                         VIDEO_DS=$(grep -E "video chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$VIDEO_DS" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect OFDM channels  ##
@@ -892,6 +1081,13 @@ do
                         continue;
                     else
                         OFDM_DS_WIDTH=$(grep -E "OFDM chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$OFDM_DS_WIDTH" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     ##  Collect us docsis channels ##
@@ -912,6 +1108,13 @@ do
                         continue;
                     else
                         DOCSIS_US=$(grep -E "us docsis chans" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$DOCSIS_US" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     
@@ -934,6 +1137,13 @@ do
                         continue;
                     else
                         OFDMA_US_WIDTH=$(grep -E "OFDMA chan width" $Temp_Dir_Path/Temp_Process_File2.txt | cut -d "=" -f2 |tr -d ' ')
+                        if [ -z "$OFDMA_US_WIDTH" ]; then
+                            if [ "$BDMDuplicate" == "1" ]; then
+                                continue;
+                            fi;
+                            ((Skipped_Serials++));
+                            continue;
+                        fi;
                     fi
                     
                     RF_DS=NULL; OFDM_DS=NULL ; OFDMA_US=NULL;
