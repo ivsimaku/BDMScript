@@ -122,7 +122,7 @@ do
                 do
                     ((L_QAM_MOD=QAM_MOD+15))
                     sed -n "$QAM_MOD,$L_QAM_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: Q" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $2 } '  > /dev/null 2>&1
+                    grep -i "Serial_No: Q" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
@@ -429,7 +429,7 @@ do
                 do
                     ((L_UPS_MOD=UPS_MOD+15))
                     sed -n "$UPS_MOD,$L_UPS_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: U" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $2 } ' > /dev/null 2>&1
+                    grep -i "Serial_No: U" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
@@ -661,7 +661,7 @@ do
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                     else
-                        grep -i "Serial_No: C" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $2 } ' > /dev/null 2>&1
+                        grep -i "Serial_No: C" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
@@ -967,7 +967,7 @@ do
                 do
                     ((L_BDM_MOD=BDM_MOD+15))
                     sed -n "$BDM_MOD,$L_BDM_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: X" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $2 } '  > /dev/null 2>&1
+                    grep -i "Serial_No: X" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
