@@ -122,12 +122,12 @@ do
                 do
                     ((L_QAM_MOD=QAM_MOD+15))
                     sed -n "$QAM_MOD,$L_QAM_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: Q" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
+                    grep -i "Serial_No.*Q" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
                     else
-                        Serial_Num=$(grep -i "Serial_No: Q" $Temp_Dir_Path/Temp_Process_File1.txt | head -1 | awk ' { print $2 } ')    #Collecting the QAM Serial No's
+                        Serial_Num=$(grep -i "Serial_No.*Q" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed -e 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')    #Collecting the QAM Serial No's
                         echo "$Serial_Num" >> $Temp_Dir_Path/QAM_Serial_Num.txt
                     fi
                 done
@@ -429,12 +429,12 @@ do
                 do
                     ((L_UPS_MOD=UPS_MOD+15))
                     sed -n "$UPS_MOD,$L_UPS_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: U" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
+                    grep -i "Serial_No.*U" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                     else
-                        Serial_Num=$(grep -i "Serial_No: U" $Temp_Dir_Path/Temp_Process_File1.txt | head -1| awk ' { print $2 } ')
+                        Serial_Num=$(grep -i "Serial_No.*U" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed -e 's/\<SERIAL_NO\>//g' | head -1| awk ' { print $2 } ')
                         echo "$Serial_Num" >> $Temp_Dir_Path/UPS_Serial_Num.txt
                     fi
                 done
@@ -655,18 +655,18 @@ do
                 do
                     ((L_CSC_MOD=CSC_MOD+15))
                     sed -n "$CSC_MOD,$L_CSC_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    Null_status=$(grep -i "Serial_No: C" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $1 } ')
+                    Null_status=$(grep -i "Serial_No.*C" $Temp_Dir_Path/Temp_Process_File1.txt | awk ' { print $1 } ')
                     s2=Chassis
                     if [ "$Null_status" == "$s2" ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                     else
-                        grep -i "Serial_No: C" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
+                        grep -i "Serial_No.*C" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                         else
-                            Serial_Num=$(grep -i "Serial_No: C" $Temp_Dir_Path/Temp_Process_File1.txt | head -1 | awk ' { print $2 } ')
+                            Serial_Num=$(grep -i "Serial_No.*C" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed -e 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')
                             echo "$Serial_Num" >> $Temp_Dir_Path/CSC_Serial_Num.txt
                         fi
                     fi
@@ -967,12 +967,12 @@ do
                 do
                     ((L_BDM_MOD=BDM_MOD+15))
                     sed -n "$BDM_MOD,$L_BDM_MOD p" "$Dir_Path_Input/$Filename" > $Temp_Dir_Path/Temp_Process_File1.txt
-                    grep -i "Serial_No: X" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
+                    grep -i "Serial_No.*X" $Temp_Dir_Path/Temp_Process_File1.txt > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
                     else
-                        Serial_Num=$(grep -i "Serial_No: X" $Temp_Dir_Path/Temp_Process_File1.txt | head -1 | awk ' { print $2 } ')				#Collecting the BDM Serial No's
+                        Serial_Num=$(grep -i "Serial_No.*X" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed -e 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')				#Collecting the BDM Serial No's
                         echo "$Serial_Num" >> $Temp_Dir_Path/BDM_Serial_Num.txt
                     fi
                 done
