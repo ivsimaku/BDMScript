@@ -1323,16 +1323,16 @@ if [ $? != 0 ]
 then
     
     echo " $S_S_No Files processed Successfully out of $T_S_No "  >> "$logfile"
-    #	 echo Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the Successive log report | mail -s "Successive Report on $(date +%m_%d_%Y) " -a $logfile $ $rcpt  > /dev/null 2>&1
+    echo "Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the Successive log report" | mail -s "Successive Report on $(date +%m_%d_%Y) " -a "$logfile $ $rcpt"  > /dev/null 2>&1
     cp "$Temp_Dir_Path/Temp_output.txt" "$output"  > /dev/null 2>&1
     cp "$output" "$Archive_dir/."  > /dev/null 2>&1 # Keep copy of the output file in Archive directory Location.
-    #rm -rf $Dir_Path/.Config  #Clearing the Temporary Files directory
+    rm -rf $Dir_Path/.Config  #Clearing the Temporary Files directory
     
 else
     
-    #	 echo Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the error log | mail -s "Error Report on $(date +%m_%d_%Y) " -a $error_log_trace $rcpt > /dev/null 2>&1
+    echo "Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the error log" | mail -s "Error Report on $(date +%m_%d_%Y) " -a "$error_log_trace $rcpt" > /dev/null 2>&1
     cp "$Temp_Dir_Path/Temp_output.txt" "$output"  > /dev/null 2>&1
     cp "$output" "$Archive_dir/."  > /dev/null 2>&1 # Keep copy of the output file in Archive directory Location.
-    #rm -rf $Dir_Path/.Config  #Clearing the Temporary Files directory
+    rm -rf $Dir_Path/.Config  #Clearing the Temporary Files directory
     echo " $S_S_No Files processed Successfully out of $T_S_No "  >> "$logfile"
 fi
