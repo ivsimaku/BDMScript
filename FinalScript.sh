@@ -127,7 +127,7 @@ do
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
                     else
-                        Serial_Num=$(grep -i "Serial_No.*Q" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')    #Collecting the QAM Serial No's
+                        Serial_Num=$(grep -i "Serial_No.*Q" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed "s/\<SERIAL_NO\>//g" | head -1 | awk ' { print $2 } ')    #Collecting the QAM Serial No's
                         echo "$Serial_Num" >> $Temp_Dir_Path/QAM_Serial_Num.txt
                     fi
                 done
@@ -138,7 +138,7 @@ do
                 Collect_QAM ()
                 {
                     ##  Collect Broadcast channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -166,7 +166,7 @@ do
                     fi
                     
                     ##  Collect docsis channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -193,7 +193,7 @@ do
                     fi
                     
                     ##  Collect RF channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^RF chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^RF chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -220,7 +220,7 @@ do
                     fi
                     
                     ##  Collect video channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans"  > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans"  > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -249,7 +249,7 @@ do
                     if [ "$(wc -l < $Temp_Dir_Path/Temp_Process_File2.txt)" -gt 5 ]
                     then
                         ##  Collect OFDM channels ##
-                        sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chans" > /dev/null 2>&1
+                        sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chans" > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -276,7 +276,7 @@ do
                         fi
                         
                         ##  Collect OFDM chan width  ##
-                        sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width"  > /dev/null 2>&1
+                        sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width"  > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -434,7 +434,7 @@ do
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                     else
-                        Serial_Num=$(grep -i "Serial_No.*U" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed 's/\<SERIAL_NO\>//g' | head -1| awk ' { print $2 } ')
+                        Serial_Num=$(grep -i "Serial_No.*U" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed "s/\<SERIAL_NO\>//g" | head -1| awk ' { print $2 } ')
                         echo "$Serial_Num" >> $Temp_Dir_Path/UPS_Serial_Num.txt
                     fi
                 done
@@ -446,7 +446,7 @@ do
                 {
                     
                     ## Collect docsis channels  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -475,7 +475,7 @@ do
                     if [ "$(wc -l < $Temp_Dir_Path/Temp_Process_File2.txt)" -gt 2 ]
                     then
                         ## Collect OFDM channels  ##
-                        sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chans" > /dev/null 2>&1
+                        sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chans" > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -502,7 +502,7 @@ do
                         fi
                         
                         ## Collect OFDMA channel Width  ##
-                        sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width"  > /dev/null 2>&1
+                        sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width"  > /dev/null 2>&1
                         if [ $? != 0 ]
                         then
                             # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -666,7 +666,7 @@ do
                         then
                             cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt
                         else
-                            Serial_Num=$(grep -i "Serial_No.*C" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')
+                            Serial_Num=$(grep -i "Serial_No.*C" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed "s/\<SERIAL_NO\>//g" | head -1 | awk ' { print $2 } ')
                             echo "$Serial_Num" >> $Temp_Dir_Path/CSC_Serial_Num.txt
                         fi
                     fi
@@ -681,7 +681,7 @@ do
                 {
                     
                     ##  Collect Broadcast channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -708,7 +708,7 @@ do
                     fi
                     
                     ##  Collect DS docsis channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^ds docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^ds docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -735,7 +735,7 @@ do
                     fi
                     
                     ##  Collect OFDM chan width  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width"  > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width"  > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -762,7 +762,7 @@ do
                     fi
                     
                     ##  Collect video channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans"  > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans"  > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -790,7 +790,7 @@ do
                     
                     
                     ## Collect US docsis channels  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^us docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^us docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -817,7 +817,7 @@ do
                     fi
                     
                     ## Collect OFDMA channel Width  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width"  > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width"  > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -972,7 +972,7 @@ do
                     then
                         cat /dev/null > $Temp_Dir_Path/Temp_Process_File1.txt   # Nullifying the File For Next process Starts
                     else
-                        Serial_Num=$(grep -i "Serial_No.*X" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed 's/\<SERIAL_NO\>//g' | head -1 | awk ' { print $2 } ')				#Collecting the BDM Serial No's
+                        Serial_Num=$(grep -i "Serial_No.*X" $Temp_Dir_Path/Temp_Process_File1.txt | tr '[:lower:]' '[:upper:]' | sed "s/\<SERIAL_NO\>//g" | head -1 | awk ' { print $2 } ')				#Collecting the BDM Serial No's
                         echo "$Serial_Num" >> $Temp_Dir_Path/BDM_Serial_Num.txt
                     fi
                 done
@@ -983,7 +983,7 @@ do
                 Collect_BDM ()
                 {
                     ##  Collect broadcast channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^broadcast chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1010,7 +1010,7 @@ do
                     fi
                     
                     ##  Collect ds docsis channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^ds docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^ds docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1037,7 +1037,7 @@ do
                     fi
                     
                     ##  Collect video channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^video chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1064,7 +1064,7 @@ do
                     fi
                     
                     ##  Collect OFDM channels  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDM chan width" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1091,7 +1091,7 @@ do
                     fi
                     
                     ##  Collect us docsis channels ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^us docsis chans" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^us docsis chans" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1120,7 +1120,7 @@ do
                     
                     
                     ##  Collect OFDMA channel width  ##
-                    sed 's/^[ \t]*//' $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width" > /dev/null 2>&1
+                    sed "s/^[ \t]*//" $Temp_Dir_Path/Temp_Process_File2.txt | grep -Eiw "^OFDMA chan width" > /dev/null 2>&1
                     if [ $? != 0 ]
                     then
                         # Check if the current serial is duplicate, that way you can continue with the next duplicate serial
@@ -1270,7 +1270,7 @@ do
         
         if [ $QAM_Status == 1 ] || [ $UPS_Status == 1 ] || [ $CSC_Status == 1 ] || [ $BDM_Status == 1 ] ;
         then
-            Serials_Count=$(cat $Temp_Dir_Path/*_Serial_Num.txt|sed '/^\s*$/d' | wc -l)
+            Serials_Count=$(cat $Temp_Dir_Path/*_Serial_Num.txt|sed "/^\s*$/d" | wc -l)
             
             
             
@@ -1292,7 +1292,7 @@ do
                 echo "$Filename processed Successfully...! "  >> $Temp_Dir_Path/logfile.txt
                 cat $Temp_Dir_Path/output.txt >> $Temp_Dir_Path/Temp_output.txt
                 cat $Temp_Dir_Path/logfile.txt >> "$logfile"
-                cat $Temp_Dir_Path/*_Serial_Num.txt|sed '/^\s*$/d'  > "$Archive_dir/$Filename""_Serials"
+                cat $Temp_Dir_Path/*_Serial_Num.txt|sed "/^\s*$/d"  > "$Archive_dir/$Filename""_Serials"
                 rm -rf "$Temp_Dir_Path/*Serial_Num.txt"
                 cat /dev/null > $Temp_Dir_Path/output.txt
                 cat /dev/null > $Temp_Dir_Path/logfile.txt
@@ -1323,7 +1323,7 @@ if [ $? != 0 ]
 then
     
     echo " $S_S_No Files processed Successfully out of $T_S_No "  >> "$logfile"
-    echo "Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the Successive log report" | mail -s "Successive Report on $(date +%m_%d_%Y) " -a "$logfile $ $rcpt"  > /dev/null 2>&1
+    echo "Script executed and $S_S_No Files processed Successfully out of $T_S_No and attached the Successive log report" | mail -s "Successive Report on $(date +%m_%d_%Y) " -a "$logfile $rcpt"  > /dev/null 2>&1
     cp "$Temp_Dir_Path/Temp_output.txt" "$output"  > /dev/null 2>&1
     cp "$output" "$Archive_dir/."  > /dev/null 2>&1 # Keep copy of the output file in Archive directory Location.
     rm -rf $Dir_Path/.Config  #Clearing the Temporary Files directory
